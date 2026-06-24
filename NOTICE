@@ -1,0 +1,26 @@
+ttx — Incident Response Tabletop Exercise
+Copyright 2026 The ttx Authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+--------------------------------------------------------------------------------
+Third-party material and attributions
+--------------------------------------------------------------------------------
+
+OpenTelemetry Demo (Astronomy Shop)
+  https://github.com/open-telemetry/opentelemetry-demo
+  Copyright The OpenTelemetry Authors
+  Licensed under the Apache License, Version 2.0.
+
+  The target-system reference material under ref/otel-demo/ paraphrases the
+  OpenTelemetry Demo's public documentation (https://opentelemetry.io/docs/demo/)
+  for educational tabletop-exercise use. It is an independent description, not a
+  verbatim copy of the original text.
+
+Google SRE Book / SRE Workbook
+  https://sre.google/books/
+
+  The incident-handling framework under ops/incident-handling-manual.md is an
+  independent description informed by the publicly available Google SRE Book and
+  SRE Workbook (incident command, severity, escalation, communication, blameless
+  postmortems). It is not a reproduction of the original text.

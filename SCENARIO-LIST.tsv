@@ -1,0 +1,2 @@
+ID	初動対応部署	最初の開示可能イベント	受動対応部署
+SCN-001	SRE	checkout/payment のエラー率急増アラートが発火（Prometheus/Grafana で確認）	インシデントコマンダー;開発;カスタマーサポート;広報

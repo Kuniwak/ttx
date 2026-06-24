@@ -1,0 +1,24 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/goreleaser/goreleaser/v2.12.0/goreleaser_Darwin_all.tar.gz",
+      "checksum": "0FD9A6134389A377DA88C343FB36E3D7F00B45D9D7B8B95BF25B33A3C7E8ECD6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/rhysd/actionlint/v1.7.7/actionlint_1.7.7_darwin_arm64.tar.gz",
+      "checksum": "2693315B9093AEACB4EBD91A993FEA54FC215057BF0DA2659056B4BC033873DB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/ghalint/v1.5.3/ghalint_1.5.3_darwin_arm64.tar.gz",
+      "checksum": "F5D463AEE96EA2485903218A12143478A517C084F94A3F5CA47F1D90440B4ADB",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v24.7.0/node-v24.7.0-darwin-arm64.tar.gz",
+      "checksum": "FF8298FAAF82C85444AAD7F1E12A4882496286EA9008702029B359D7FAC7F8B3",
+      "algorithm": "sha256"
+    }
+  ]
+}

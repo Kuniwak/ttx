@@ -1,0 +1,8 @@
+/public_log.jsonl
+/dist
+.ai/runs
+.env*
+/tmp
+/ttx-human
+/ttx-ai-send
+/ttx-ai-recv

@@ -1,0 +1,39 @@
+# systemd ユニットのサンプル（Linux）。
+# init システムからは自前スーパーバイザ ttx-slack-sup を「起動1回のみ」で登録する。
+# 無限再起動による計算機資源の浪費を避けるため、再起動の管理は ttx-slack-sup が担う。
+# ttx-slack-sup は ttx-slack を監視し、終了するたび backoff を挟んで再起動するが、
+# window 内で max-restarts 回終了が続いたらクラッシュループとみなして監視を停止し、
+# Slack incoming webhook（SDK 非依存の生 HTTP）へエラーと直近の標準エラーを通報する。
+# よって Restart=no（systemd 自身は再起動しない。stop 後は手動で復旧）。
+#
+# 配置例: /etc/systemd/system/ttx-slack.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now ttx-slack
+#   journalctl -u ttx-slack -f
+#
+# 前提: codex が User= のアカウントで事前認証済み（ChatGPT アカウント）であること。
+# ttx-slack・codex・per-thread socket は同一ホスト・同一ユーザーで動かす。
+
+[Unit]
+Description=ttx-slack supervisor (incident response tabletop exercise Slack gateway)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ttx
+WorkingDirectory=/opt/ttx
+# トークンと通報先 webhook は環境ファイルに置く（0600 推奨）:
+#   SLACK_BOT_TOKEN=, SLACK_APP_TOKEN=, SLACK_ALERT_WEBHOOK_URL=
+EnvironmentFile=/etc/ttx-slack.env
+# codex は公式インストーラで User= の ~/.local/bin に入る。systemd の PATH には
+# ~/.local/bin が含まれず、ログインシェルの rc（PATH 追記）も読まれないため、
+# --codex-bin に絶対パスを渡して PATH 非依存で解決させる（home が異なれば調整する）。
+ExecStart=/usr/local/bin/ttx-slack-sup -- /usr/local/bin/ttx-slack --repo-dir /opt/ttx --max-sessions 3 --codex-bin /home/ttx/.local/bin/codex
+# 起動1回のみ。クラッシュループ停止を最終とするため systemd では再起動しない。
+Restart=no
+# OOM 耐性の調整（必要に応じて。OOM 自体は ttx-slack-sup が検知・通報する）
+MemoryMax=2G
+OOMScoreAdjust=-200
+
+[Install]
+WantedBy=multi-user.target

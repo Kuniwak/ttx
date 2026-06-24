@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd エージェントのサンプル（macOS / Mac mini 運用）。
+  init システムからは自前スーパーバイザ ttx-slack-sup を「起動1回のみ」で登録する
+  （RunAtLoad のみ、KeepAlive は付けない）。再起動の管理は ttx-slack-sup が担い、
+  無限再起動による計算機資源の浪費を避ける。ttx-slack-sup は ttx-slack を監視し、
+  window 内で max-restarts 回終了が続いたらクラッシュループとみなして監視を停止し、
+  Slack incoming webhook（SDK 非依存の生 HTTP）でエラーと直近の標準エラーを通報する。
+  クラッシュループ停止を最終とするため KeepAlive は付けない（停止後は手動で復旧）。
+
+  配置例: ~/Library/LaunchAgents/io.github.ttx-exercise.ttx-slack.plist
+    launchctl load -w ~/Library/LaunchAgents/io.github.ttx-exercise.ttx-slack.plist
+
+  前提: codex がこのユーザーで事前認証済み（ChatGPT アカウント）。
+  トークン・通報先 webhook は環境変数で渡す。秘匿管理に注意。
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>io.github.ttx-exercise.ttx-slack</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/ttx-slack-sup</string>
+    <string>--</string>
+    <string>/usr/local/bin/ttx-slack</string>
+    <string>--repo-dir</string>
+    <string>/Users/ttx/ttx-exercise</string>
+    <string>--max-sessions</string>
+    <string>3</string>
+    <!-- codex が PATH 上に無ければ絶対パスを指定する（Linux/systemd の例は deploy/README.md 参照）:
+         <string>--codex-bin</string><string>/Users/ttx/.local/bin/codex</string> -->
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>SLACK_BOT_TOKEN</key>
+    <string>xoxb-REPLACE_ME</string>
+    <key>SLACK_APP_TOKEN</key>
+    <string>xapp-REPLACE_ME</string>
+    <key>SLACK_ALERT_WEBHOOK_URL</key>
+    <string>https://hooks.slack.com/services/REPLACE_ME</string>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/ttx/ttx-exercise</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/ttx-slack.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/ttx-slack.err.log</string>
+</dict>
+</plist>

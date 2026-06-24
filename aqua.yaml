@@ -1,0 +1,11 @@
+---
+checksum:
+  enabled: true
+packages:
+registries:
+- type: standard
+  ref: v4.407.3  # renovate: depName=aquaproj/aqua-registry
+packages:
+- name: rhysd/actionlint@v1.7.7
+- name: suzuki-shunsuke/ghalint@v1.5.3
+- name: goreleaser/goreleaser@v2.12.0

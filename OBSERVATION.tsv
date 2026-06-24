@@ -1,0 +1,9 @@
+観測ID	観測種別	名称	対象システム	対象機能	取得元	確認方法	正常時の目安	異常時の例	関連シナリオID	能動通知対象	対応者質問時に開示可	開示条件	参照手順書
+OBS-001	アラート	checkout エラー率アラート	checkout	注文確定	Prometheus/Grafana	checkout のリクエストエラー率メトリクスとアラート発火状況を確認	エラー率 < 1%	エラー率が急増（数十%規模）	SCN-001	はい	はい	発火後に開示可	ops/payment-service-failure.md
+OBS-002	メトリクス	payment エラー率	payment	カード課金	Prometheus/Grafana	payment のエラー率・レイテンシを確認	エラー率 < 1%	カード課金のエラーが急増	SCN-001	いいえ	はい	質問時に開示可	ops/payment-service-failure.md
+OBS-003	トレース	失敗した checkout の分散トレース	checkout, payment	注文確定	Jaeger	失敗リクエストのトレースを辿り、どのスパンがエラーかを確認	決済段までエラーなく完了	payment 呼び出しスパンがエラー	SCN-001	いいえ	はい	質問時に開示可	ops/payment-service-failure.md
+OBS-004	ダッシュボード	checkout 成功率ダッシュボード	checkout	注文確定	Grafana	注文確定の成功率の時系列を確認	成功率はおおむね99%	成功率が大きく低下	SCN-001	いいえ	はい	質問時に開示可	ops/payment-service-failure.md
+OBS-005	メトリクス	注文完了数の推移	checkout	注文確定	Prometheus/Grafana	単位時間あたりの注文完了数を確認	通常のベースライン	障害時間帯に完了数が落ち込む	SCN-001	いいえ	はい	質問時に開示可	ops/payment-service-failure.md
+OBS-006	変更履歴	直近の変更・デプロイ・フラグ履歴	payment	デプロイ/設定	変更ログ・フラグ管理(flagd)	直近の変更・デプロイ・フラグ切替の履歴を確認	直近に関連変更なし	直近に payment 関連の変更あり	SCN-001	いいえ	はい	変更の有無を尋ねられたら開示可	ops/payment-service-failure.md
+OBS-007	問い合わせ	決済失敗に関する顧客問い合わせ	checkout	注文確定	カスタマーサポート/チケット	サポートに届く問い合わせの内容・件数を確認	平常時の件数	「決済できない」問い合わせが複数	SCN-001	はい	はい	受領後に開示可	ops/payment-service-failure.md
+OBS-008	ログ	payment サービスのログ	payment	カード課金	OpenSearch	payment のエラーログを確認	エラーログは僅少	課金失敗のエラーログが多数	SCN-001	いいえ	はい	質問時に開示可	ops/payment-service-failure.md

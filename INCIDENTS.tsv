@@ -1,0 +1,2 @@
+事象	原因	再発防止策	出典
+決済サービスの障害により、チェックアウトの決済段が失敗し注文を完了できない（OpenTelemetry Demo の paymentServiceFailure を題材にした公開例）	payment サービスがカード課金に失敗する変更/フラグが有効化された	変更の段階適用と即時ロールバック手段の整備、決済段のエラー率監視とアラート、フィーチャーフラグ変更のレビュー	https://opentelemetry.io/docs/demo/feature-flags/
