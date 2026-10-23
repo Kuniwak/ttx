@@ -1,6 +1,6 @@
 module github.com/Kuniwak/ttx
 
-go 1.25
+go 1.27.3
 
 require (
 	github.com/slack-go/slack v0.23.1
